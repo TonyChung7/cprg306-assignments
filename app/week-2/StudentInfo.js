@@ -6,8 +6,8 @@ export default function StudentInfo() {
       <p>Name: Shih Wei Chung</p>
       <p>
         GitHub:{" "}
-        <Link href="">
-          https://github.com/TonyChung7/cprg306-assignments/tree/master
+        <Link href="https://github.com/TonyChung7/cprg306-assignments">
+          TonyChung7/cprg306-assignments
         </Link>
       </p>
     </div>
