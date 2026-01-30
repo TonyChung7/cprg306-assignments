@@ -89,7 +89,7 @@ export default function GroceryItemList() {
   ];
 
   return (
-    <ul>
+    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
       {GroceryItems.map((item, index) => (
         <GroceryItem key={index} {...item} />
       ))}
