@@ -39,15 +39,18 @@ export default function NewItem() {
         placeholder="Item Name"
       />
       <div className="flex w-full">
-        <input
-          className="flex-1 text-center border-r-2 border-gray-300"
-          type="number"
-          value={itemQuantity}
-          onChange={(e) => setItemQuantity(Number(e.target.value))}
-          min="1"
-          max="99"
-          placeholder="Quantity"
-        />
+        <div className="flex flex-1">
+          <p>Quantity:</p>
+          <input
+            className="flex-1 text-center border-r-2 border-gray-300"
+            type="number"
+            value={itemQuantity}
+            onChange={(e) => setItemQuantity(Number(e.target.value))}
+            min="1"
+            max="99"
+            placeholder="Quantity"
+          />
+        </div>
         <select
           className="flex-1 text-center bg-gray-200 "
           value={itemCategory}
