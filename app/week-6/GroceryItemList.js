@@ -8,22 +8,26 @@ export default function GroceryItemList({ items }) {
     if (sortby === "name") {
       return a.name.localeCompare(b.name);
     } else if (sortby === "category") {
-      return a.category.localeCompare(b.category);
+      const result = a.category.localeCompare(b.category);
+      if (result === 0) {
+        return a.name.localeCompare(b.name);
+      }
+      return result;
     }
   });
 
   return (
     <div>
       <div className="flex justify-center items-center gap-4 mb-4">
-        <p> Sort by:</p>
+        <p className="text-black"> Sort by:</p>
         <button
-          className={`px-4 py-2 rounded ${sortby === "name" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 py-2 rounded text-black hover:bg-gray-400 ${sortby === "name" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
           onClick={() => setSortby("name")}
         >
           Name
         </button>
         <button
-          className={`px-4 py-2 rounded ${sortby === "category" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 py-2 rounded text-black  hover:bg-gray-500 ${sortby === "category" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
           onClick={() => setSortby("category")}
         >
           Category
