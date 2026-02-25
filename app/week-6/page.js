@@ -6,8 +6,24 @@ import NewItem from "./NewItem";
 
 export default function Page() {
   const [items, setItems] = useState(GroceryItems);
+  // const handleAddItem = (newItem) => {
+  //   setItems([...items, newItem]);
+  // };
   const handleAddItem = (newItem) => {
-    setItems([...items, newItem]);
+    setItems((items) => {
+      const currentItems = items.map((item) => ({ ...item }));
+      const existingItem = currentItems.find(
+        (item) =>
+          item.name.toLowerCase() === newItem.name.toLowerCase() &&
+          item.category === newItem.category,
+      );
+      if (existingItem) {
+        existingItem.quantity =
+          Number(existingItem.quantity) + Number(newItem.quantity);
+        return currentItems;
+      }
+      return [...currentItems, newItem];
+    });
   };
 
   return (
