@@ -43,13 +43,13 @@ export default function GroceryItemList({ items }) {
           Name
         </button>
         <button
-          className={`px-4 py-2 rounded text-black  hover:bg-gray-500 ${sortby === "category" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 py-2 rounded text-black  hover:bg-gray-400 ${sortby === "category" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
           onClick={() => setSortby("category")}
         >
           Category
         </button>
         <button
-          className={`px-4 py-2 rounded text-black  hover:bg-gray-500 ${sortby === "group" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 py-2 rounded text-black  hover:bg-gray-400 ${sortby === "group" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
           onClick={() => setSortby("group")}
         >
           Group by Category
