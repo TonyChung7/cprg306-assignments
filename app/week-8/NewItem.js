@@ -26,7 +26,7 @@ export default function NewItem({ onAddItem }) {
 
   return (
     <form
-      className="bg-gray-200 text-black p-4 items-center rounded-lg w-[80%] max-w-3xl mx-auto flex flex-col gap-4"
+      className="bg-gray-200 text-black p-4 items-center rounded-lg w-[80%] max-w-2xl mx-auto flex flex-col gap-4"
       onSubmit={handleSubmit}
     >
       <label htmlFor="item-name" className="sr-only">

@@ -3,7 +3,7 @@ import GroceryItem from "./GroceryItem";
 import { useState } from "react";
 import CategoryItem from "./CategoryItem";
 
-export default function GroceryItemList({ items }) {
+export default function GroceryItemList({ items, onItemSelect }) {
   const [sortby, setSortby] = useState("name");
   const sortedItems = [...items].sort((a, b) => {
     if (sortby === "name") {
@@ -27,7 +27,7 @@ export default function GroceryItemList({ items }) {
 
   return (
     <div>
-      <div className="flex justify-center items-center gap-4 mb-4">
+      <div className="flex justify-center items-center gap-4 my-4 mx-4">
         <p className="text-black"> Sort by:</p>
         <button
           className={`px-4 py-2 rounded text-black hover:bg-gray-400 ${sortby === "name" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
@@ -51,9 +51,9 @@ export default function GroceryItemList({ items }) {
       {sortby == "group" ? (
         <CategoryItem categoryList={categoryList} />
       ) : (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-1">
           {sortedItems.map((item) => (
-            <GroceryItem key={item.id} {...item} />
+            <GroceryItem key={item.id} {...item} onSelect={onItemSelect} />
           ))}
         </ul>
       )}
