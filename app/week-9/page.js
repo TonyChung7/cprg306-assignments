@@ -1,58 +1,61 @@
 "use client";
-import GroceryItemList from "./GroceryItemList";
-import GroceryItems from "./GroceryItems.json";
-import { useState } from "react";
-import NewItem from "./NewItem";
-import MealIdeas from "../week-8/MealIdeas";
 
-export default function Page() {
-  const [items, setItems] = useState(GroceryItems);
-  const [selectedItemName, setSelectedItemName] = useState("");
+import Link from "next/link";
+import { useUserAuth } from "../contexts/AuthContext";
 
-  const handleAddItem = (newItem) => {
-    setItems((items) => {
-      const currentItems = items.map((item) => ({ ...item }));
-      const existingItem = currentItems.find(
-        (item) =>
-          item.name.toLowerCase() === newItem.name.toLowerCase() &&
-          item.category === newItem.category,
-      );
-      if (existingItem) {
-        existingItem.quantity =
-          Number(existingItem.quantity) + Number(newItem.quantity);
-        return currentItems;
-      }
-      return [...currentItems, newItem];
-    });
+export default function LandingPage() {
+  const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
+
+  const handleSignIn = async () => {
+    try {
+      await gitHubSignIn();
+    } catch (error) {
+      console.error("登入失敗：", error);
+    }
   };
 
-  const handleItemSelect = (itemName) => {
-    const cleanedName = itemName
-      .split(",")[0]
-      .replace(
-        /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
-        "",
-      )
-      .trim();
-    setSelectedItemName(cleanedName);
+  const handleSignOut = async () => {
+    try {
+      await firebaseSignOut();
+    } catch (error) {
+      console.error("登出失敗：", error);
+    }
   };
 
   return (
-    <main className="bg-stone-100 p-2 min-h-screen">
-      <h1 className="text-4xl font-extrabold text-center m-12 text-slate-950">
-        Shopping List + Meal Ideas
-      </h1>
-      <div className="flex gap-2">
-        <div className="flex-1 border-r-2 border-stone-300 border-dashed">
-          <div className="mb-6">
-            <NewItem onAddItem={handleAddItem} />
-          </div>
-          <GroceryItemList items={items} onItemSelect={handleItemSelect} />
+    <main className="p-10">
+      <h1 className="text-3xl font-bold mb-5">Shopping List App</h1>
+
+      {user ? (
+        <div>
+          <p className="mb-4">
+            Welcome, {user.displayName} ({user.email})
+          </p>
+          <button
+            onClick={handleSignOut}
+            className="bg-red-500 text-white px-4 py-2 rounded mr-4"
+          >
+            Logout
+          </button>
+          <br />
+          <br />
+          <Link
+            href="/week-9/shopping-list"
+            className="text-blue-500 underline"
+          >
+            Go to Shopping List
+          </Link>
         </div>
-        <div className="flex-1">
-          <MealIdeas ingredient={selectedItemName} />
+      ) : (
+        <div>
+          <button
+            onClick={handleSignIn}
+            className="bg-slate-800 text-white px-4 py-2 rounded"
+          >
+            Login with GitHub
+          </button>
         </div>
-      </div>
+      )}
     </main>
   );
 }
