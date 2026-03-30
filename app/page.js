@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function Home() {
-  const weeks = [2, 3, 4, 5, 6, 7, 8, 9];
+  const weeks = [2, 3, 4, 5, 6, 7, 8, 9, 10];
   const linkStyle =
     " hover:text-blue-700 hover:underline inline-block hover:translate-x-2 transition-all duration-300";
   return (
