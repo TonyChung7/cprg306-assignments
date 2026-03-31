@@ -9,13 +9,13 @@ export default function NewItem({ onAddItem }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newItem = {
-      id: crypto.randomUUID(),
+      // id: crypto.randomUUID(),
       name: itemName,
       quantity: itemQuantity,
       category: itemCategory,
     };
 
-    console.log(newItem);
+    // console.log(newItem);
 
     onAddItem(newItem);
 

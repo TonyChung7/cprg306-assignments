@@ -1,34 +1,48 @@
 "use client";
 import GroceryItemList from "./GroceryItemList";
-import GroceryItems from "./GroceryItems.json";
 import { useState } from "react";
 import NewItem from "./NewItem";
 import MealIdeas from "./MealIdeas";
 import { useUserAuth } from "@/app/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import {
+  getItems,
+  addItem,
+} from "@/app/week-10/_services/shopping-list-service";
 
 export default function Page() {
-  const [items, setItems] = useState(GroceryItems);
+  const [items, setItems] = useState([]);
   const [selectedItemName, setSelectedItemName] = useState("");
   const { user } = useUserAuth();
   const router = useRouter();
 
-  const handleAddItem = (newItem) => {
-    setItems((items) => {
-      const currentItems = items.map((item) => ({ ...item }));
-      const existingItem = currentItems.find(
-        (item) =>
-          item.name.toLowerCase() === newItem.name.toLowerCase() &&
-          item.category === newItem.category,
-      );
-      if (existingItem) {
-        existingItem.quantity =
-          Number(existingItem.quantity) + Number(newItem.quantity);
-        return currentItems;
+  useEffect(() => {
+    async function loadItems() {
+      try {
+        if (user) {
+          const fetchedItems = await getItems(user.uid);
+          setItems(fetchedItems);
+        }
+      } catch (error) {
+        console.error("Error loading items:", error);
       }
-      return [...currentItems, newItem];
-    });
+    }
+    if (user) {
+      loadItems();
+    }
+  }, [user]);
+
+  const handleAddItem = async (newItem) => {
+    try {
+      const newItemId = await addItem(user.uid, newItem);
+      const itemWithId = { ...newItem, id: newItemId };
+      setItems((items) => {
+        return [...items, itemWithId];
+      });
+    } catch (error) {
+      console.error("Error adding item:", error);
+    }
   };
 
   const handleItemSelect = (itemName) => {
@@ -48,7 +62,7 @@ export default function Page() {
         <h1 className="text-2xl font-bold text-red-600">Access Denied</h1>
         <p className="mt-4">You must be logged in to view this page.</p>
         <button
-          onClick={() => router.push("/week-9")}
+          onClick={() => router.push("/week-10")}
           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
         >
           Go to Login Page

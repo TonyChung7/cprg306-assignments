@@ -40,7 +40,7 @@ export default function LandingPage() {
           <br />
           <br />
           <Link
-            href="/week-9/shopping-list"
+            href="/week-10/shopping-list"
             className="text-blue-500 underline"
           >
             Go to Shopping List
